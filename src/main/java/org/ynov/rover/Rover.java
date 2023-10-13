@@ -1,20 +1,25 @@
 package org.ynov.rover;
 
 import org.ynov.planet.Planet;
-import org.ynov.shared.Direction;
-import org.ynov.shared.Orientation;
-import org.ynov.shared.Position;
-import org.ynov.shared.Rotation;
+import org.ynov.shared.*;
 
-public class Rover {
+public class Rover implements IRover {
     public Orientation orientation;
     public Position position;
     public Planet planet;
 
-    public Rover() {
+    public Rover(Planet planet) {
         this.orientation = Orientation.NORTH;
         this.position = new Position();
-        this.planet = new Planet();
+        this.planet = planet;
+    }
+
+    public int getLatitude() {
+        return this.position.getY();
+    }
+
+    public int getLongitude() {
+        return this.position.getX();
     }
 
     public void rotate(Rotation rotation) {
@@ -25,13 +30,15 @@ public class Rover {
                 case SOUTH -> Orientation.WEST;
                 case EST -> Orientation.SOUTH;
             };
-        } else {
+        } else if (rotation.equals(Rotation.LEFT)) {
             orientation = switch (orientation) {
                 case NORTH -> Orientation.WEST;
                 case WEST -> Orientation.SOUTH;
                 case SOUTH -> Orientation.EST;
                 case EST -> Orientation.NORTH;
             };
+        } else {
+            System.out.println("Error rotation");
         }
         this.getStatus();
     }
@@ -39,17 +46,17 @@ public class Rover {
     public void move(Direction direction) {
         if (direction.equals(Direction.FRONT)) {
             switch (this.orientation) {
-                case NORTH -> this.checkOutOfBoundAndMove(Move.Y_plus);
-                case WEST -> this.checkOutOfBoundAndMove(Move.X_minus);
-                case SOUTH -> this.checkOutOfBoundAndMove(Move.Y_minus);
-                case EST -> this.checkOutOfBoundAndMove(Move.X_plus);
+                case NORTH -> position.checkOutOfBoundAndMove(MoveDirection.Y_plus, planet);
+                case WEST -> position.checkOutOfBoundAndMove(MoveDirection.X_minus, planet);
+                case SOUTH -> position.checkOutOfBoundAndMove(MoveDirection.Y_minus, planet);
+                case EST -> position.checkOutOfBoundAndMove(MoveDirection.X_plus, planet);
             }
         } else if (direction.equals(Direction.BEHIND)) {
             switch (this.orientation) {
-                case NORTH -> this.checkOutOfBoundAndMove(Move.Y_minus);
-                case WEST -> this.checkOutOfBoundAndMove(Move.X_plus);
-                case SOUTH -> this.checkOutOfBoundAndMove(Move.Y_plus);
-                case EST -> this.checkOutOfBoundAndMove(Move.X_minus);
+                case NORTH -> position.checkOutOfBoundAndMove(MoveDirection.Y_minus, planet);
+                case WEST -> position.checkOutOfBoundAndMove(MoveDirection.X_plus, planet);
+                case SOUTH -> position.checkOutOfBoundAndMove(MoveDirection.Y_plus, planet);
+                case EST -> position.checkOutOfBoundAndMove(MoveDirection.X_minus, planet);
             }
         } else {
             System.out.println("Error direction");
@@ -57,48 +64,8 @@ public class Rover {
         this.getStatus();
     }
 
-    private void checkOutOfBoundAndMove(Move move) {
-        switch (move) {
-            case Y_plus -> {
-                if (this.position.Y >= this.planet.y_size) {
-                    this.position.Y = this.planet.y_size * (-1);
-                } else {
-                    this.position.Y++;
-                }
-            }
-            case Y_minus -> {
-                if (this.position.Y * (-1) >= this.planet.y_size) {
-                    this.position.Y = this.planet.y_size;
-                } else {
-                    this.position.Y--;
-                }
-            }
-            case X_plus -> {
-                if (this.position.X >= this.planet.x_size) {
-                    this.position.X = this.planet.x_size * (-1);
-                } else {
-                    this.position.X++;
-                }
-            }
-            case X_minus -> {
-                if (this.position.X * (-1) >= this.planet.x_size) {
-                    this.position.X = this.planet.x_size;
-                } else {
-                    this.position.X--;
-                }
-            }
-        }
-    }
-
     private void getStatus() {
         System.out.println(this.position);
         System.out.println(this.orientation);
-    }
-
-    private enum Move {
-        Y_plus,
-        Y_minus,
-        X_plus,
-        X_minus
     }
 }
