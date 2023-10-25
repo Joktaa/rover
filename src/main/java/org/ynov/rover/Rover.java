@@ -3,12 +3,14 @@ package org.ynov.rover;
 import org.ynov.planet.Planet;
 import org.ynov.shared.*;
 
+import java.util.Random;
+//Objet valeur
 public class Rover implements IRover {
     public Orientation orientation;
-    public Position position;
-    public Planet planet;
+    public final Position position;
+    public final Planet planet;
 
-    public Rover(Planet planet) {
+    public Rover(final Planet planet) {
         this.orientation = Orientation.NORTH;
         this.position = new Position();
         this.planet = planet;
@@ -22,7 +24,8 @@ public class Rover implements IRover {
         return this.position.getX();
     }
 
-    public void rotate(Rotation rotation) {
+
+    public void rotate(final Rotation rotation) {
         if (rotation.equals(Rotation.RIGHT)) {
             orientation = switch (orientation) {
                 case NORTH -> Orientation.EST;
@@ -43,7 +46,7 @@ public class Rover implements IRover {
         this.getStatus();
     }
 
-    public void move(Direction direction) {
+    public void move(final Direction direction) {
         if (direction.equals(Direction.FRONT)) {
             switch (this.orientation) {
                 case NORTH -> position.checkOutOfBoundAndMove(MoveDirection.Y_plus, planet);
@@ -64,8 +67,13 @@ public class Rover implements IRover {
         this.getStatus();
     }
 
-    private void getStatus() {
-        System.out.println(this.position);
-        System.out.println(this.orientation);
+    public void getStatus() {
+        System.out.println(this.position.toString());
+        System.out.println("Je suis orienté à "+this.orientation);
+    }
+
+    public boolean isObstacle() {
+        final Random rd = new Random();
+        return rd.nextInt(5) == 4;
     }
 }

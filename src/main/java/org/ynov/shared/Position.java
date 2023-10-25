@@ -2,7 +2,7 @@ package org.ynov.shared;
 
 import org.ynov.planet.Planet;
 import org.ynov.rover.Rover;
-
+//Objet valeur
 public class Position {
     private int X;
     private int Y;
@@ -12,7 +12,7 @@ public class Position {
         Y = 0;
     }
 
-    public void checkOutOfBoundAndMove(MoveDirection move, Planet planet) {
+    public void checkOutOfBoundAndMove(final MoveDirection move, final Planet planet) {
         switch (move) {
             case Y_plus -> Y = (Y >= planet.y_size) ? planet.y_size * (-1) : Y+1;
             case Y_minus -> Y = (Y * (-1) >= planet.y_size) ? planet.y_size : Y-1;
