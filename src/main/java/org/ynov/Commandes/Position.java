@@ -1,7 +1,7 @@
-package org.ynov.shared;
+package org.ynov.Commandes;
 
-import org.ynov.planet.Planet;
-import org.ynov.rover.Rover;
+import org.ynov.Topologie.Planet;
+
 //Objet valeur
 public class Position {
     private int X;

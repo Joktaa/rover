@@ -1,6 +1,8 @@
-package org.ynov.shared;
+package org.ynov.MissionControl;
 
-import org.ynov.rover.IRover;
+import org.ynov.Commandes.Direction;
+import org.ynov.Commandes.Rotation;
+import org.ynov.Rover.IRover;
 
 import java.util.ArrayList;
 // Entité

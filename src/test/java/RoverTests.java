@@ -1,11 +1,10 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.ynov.planet.Planet;
-import org.ynov.rover.Rover;
-import org.ynov.shared.Direction;
-import org.ynov.shared.Orientation;
-import org.ynov.shared.Rotation;
+import org.ynov.Topologie.Planet;
+import org.ynov.Rover.Rover;
+import org.ynov.Commandes.Direction;
+import org.ynov.Commandes.Orientation;
+import org.ynov.Commandes.Rotation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

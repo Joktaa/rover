@@ -1,7 +1,7 @@
-package org.ynov.rover;
+package org.ynov.Rover;
 
-import org.ynov.planet.Planet;
-import org.ynov.shared.*;
+import org.ynov.Commandes.*;
+import org.ynov.Topologie.Planet;
 
 import java.util.Random;
 //Objet valeur

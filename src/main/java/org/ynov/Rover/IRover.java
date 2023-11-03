@@ -1,7 +1,7 @@
-package org.ynov.rover;
+package org.ynov.Rover;
 
-import org.ynov.shared.Direction;
-import org.ynov.shared.Rotation;
+import org.ynov.Commandes.Direction;
+import org.ynov.Commandes.Rotation;
 
 public interface IRover {
     void rotate(Rotation rotation);

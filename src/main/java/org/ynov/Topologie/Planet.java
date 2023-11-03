@@ -1,5 +1,5 @@
-package org.ynov.planet;
-import java.util.Random;
+package org.ynov.Topologie;
+
 //Object valeur
 public class Planet {
     public final int x_size;

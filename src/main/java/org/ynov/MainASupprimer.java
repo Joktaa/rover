@@ -1,12 +1,12 @@
 package org.ynov;
 
-import org.ynov.planet.Planet;
-import org.ynov.rover.IRover;
-import org.ynov.rover.Rover;
-import org.ynov.shared.Console;
+import org.ynov.Topologie.Planet;
+import org.ynov.Rover.IRover;
+import org.ynov.Rover.Rover;
+import org.ynov.MissionControl.Console;
 import java.util.Scanner;
 
-public class Main {
+public class MainASupprimer {
     public static void main(String[] args) {
         final Planet planet = new Planet();
         final IRover myRover = new Rover(planet);
