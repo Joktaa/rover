@@ -22,7 +22,7 @@ public class Console {
                     case 'B' -> myRover.move(Direction.BEHIND);
                     case 'R' -> myRover.rotate(Rotation.RIGHT);
                     case 'L' -> myRover.rotate(Rotation.LEFT);
-                    default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
+                    default ->System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
                 }
             } else {
                 System.out.println("Obstacle rencontré à la position");

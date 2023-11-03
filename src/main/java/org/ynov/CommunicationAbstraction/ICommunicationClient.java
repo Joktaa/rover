@@ -1,5 +1,7 @@
 package org.ynov.CommunicationAbstraction;
 
+import nl.pvdberg.pnet.client.Client;
+
 public interface ICommunicationClient {
-    //public
+    void send(String mess);
 }

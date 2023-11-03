@@ -1,6 +1,8 @@
 package org.ynov.Rover;
 
 import org.ynov.Commandes.*;
+import org.ynov.CommunicationAbstraction.ICommunicationServer;
+import org.ynov.Socket.SocketServer;
 import org.ynov.Topologie.Planet;
 
 import java.util.Random;
@@ -70,6 +72,7 @@ public class Rover implements IRover {
     public void getStatus() {
         System.out.println(this.position.toString());
         System.out.println("Je suis orienté à "+this.orientation);
+
     }
 
     public boolean isObstacle() {
