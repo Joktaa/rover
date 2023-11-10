@@ -22,7 +22,7 @@ public class MainASupprimer {
         wantMap = carte.equals("oui");
 
         if (wantMap) {
-            new Carte(myRover);
+            new Carte(myRover, null);
         }
 
         while (isRunning) {

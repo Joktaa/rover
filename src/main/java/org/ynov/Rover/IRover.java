@@ -9,7 +9,7 @@ import org.ynov.Topologie.Planet;
 public interface IRover {
     void rotate(Rotation rotation);
     void move(Direction direction);
-    boolean isObstacle();
+    Obstacles isObstacle(char nextMouv, Obstacles obstacles);
     void getStatus();
 
     Planet getPlanet();

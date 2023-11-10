@@ -10,6 +10,6 @@ public class Main {
         // socket info before
         Planet planet= new Planet(5,5);
         final IRover myRover = new Rover(planet);
-        Carte carte = new Carte(myRover);
+        Carte carte = new Carte(myRover, null);
     }
 }

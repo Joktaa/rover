@@ -6,19 +6,24 @@ import org.ynov.CommunicationAbstraction.ICommunicationClient;
 import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Rover.IRover;
 import org.ynov.Socket.SocketClient;
+import org.ynov.Rover.Obstacles;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 // Entité
-public class Console implements IDataCallback {
+public class Console  implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
     private final IRover myRover;
+
+    private Obstacles obstacles;
     //client
     ICommunicationClient mcClient = new SocketClient();
 
     public Console(final IRover _myRover) {
         this.myRover = _myRover;
-        //test client socket
+        obstacles = new Obstacles(false, new HashMap<>());
+//        //test client socket
         mcClient.setDataCallback(this);
         mcClient.listening();
     }
@@ -30,22 +35,29 @@ public class Console implements IDataCallback {
 
     private boolean run(boolean wantMap) {
         for (final Character direction : commands) {
-//            if(!myRover.isObstacle()){
             switch (direction) {
-                case 'F' -> myRover.move(Direction.FRONT);
-                case 'B' -> myRover.move(Direction.BEHIND);
+                case 'F' -> {
+                    obstacles = myRover.isObstacle('F',obstacles);
+                    if(!obstacles.isObstacle()){
+                        myRover.move(Direction.FRONT);
+                    }
+                }
+                case 'B' -> {
+                    obstacles = myRover.isObstacle('B',obstacles);
+                    if(!obstacles.isObstacle()){
+                        myRover.move(Direction.BEHIND);
+                    }
+                }
                 case 'R' -> myRover.rotate(Rotation.RIGHT);
+
                 case 'L' -> myRover.rotate(Rotation.LEFT);
+
                 default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
             }
-//            } else {
-//                System.out.println("Obstacle rencontré à la position");
-//                myRover.getStatus();
-//                return false;
-//            }
         }
+
         if (wantMap) {
-            this.printMap(myRover);
+            this.printMap(myRover, obstacles);
         }
         return true;
     }
@@ -68,7 +80,7 @@ public class Console implements IDataCallback {
         return this.run(wantMap);
     }
 
-    private void printMap(IRover myRover) {
-        Carte carte = new Carte(myRover);
+    private void printMap(IRover myRover, Obstacles obstacles) {
+        Carte carte = new Carte(myRover, obstacles);
     }
 }

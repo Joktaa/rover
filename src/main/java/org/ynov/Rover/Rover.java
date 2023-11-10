@@ -6,9 +6,10 @@ import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Socket.SocketServer;
 import org.ynov.Topologie.Planet;
 
-import java.util.Random;
+import java.util.Map;
+
 //Objet valeur
-public class Rover implements IRover, IDataCallback{
+public class Rover implements IRover, IDataCallback {
     public Orientation orientation;
     public final Position position;
     public final Planet planet;
@@ -23,10 +24,12 @@ public class Rover implements IRover, IDataCallback{
         roverServer.setDataCallback(this);
         roverServer.listening();
     }
+
     @Override
     public void onDataReceived(String data) {
         System.out.println("Données reçues dans la rover : " + data);
     }
+
     public int getLatitude() {
         return this.position.getY();
     }
@@ -91,12 +94,51 @@ public class Rover implements IRover, IDataCallback{
 
     public void getStatus() {
         System.out.println(this.position.toString());
-        System.out.println("Je suis orienté à "+this.orientation);
+        System.out.println("Je suis orienté à " + this.orientation);
 
     }
 
-    public boolean isObstacle() {
-        final Random rd = new Random();
-        return rd.nextInt(5) == 4;
+    public Obstacles isObstacle(char nextMouv, Obstacles obstacles) {
+
+        int x = this.position.getX() + this.planet.getX_size();
+        int y = 0;
+        if(this.position.getY()>0){
+            y = this.planet.getY_size() - this.position.getY();
+        }else{
+            y = (this.position.getY() * -1) + this.planet.getY_size();
+        }
+
+
+        switch (nextMouv) {
+            case 'F' -> {
+                switch (this.orientation) {
+                    case NORTH -> y = y-1;
+                    case WEST -> x = x-1 ;
+                    case SOUTH -> y = y+1;
+                    case EST -> x = x+1;
+                }
+            }
+            case 'B' -> {
+                switch (this.orientation) {
+                    case NORTH -> y = y+1 ;
+                    case WEST -> x= x+1 ;
+                    case SOUTH -> y = y-1;
+                    case EST -> x = x-1;
+                }
+            }
+        }
+
+        String [][] obst = this.planet.getObstacle();
+        if(obst[y][x].equals("x")){
+            System.out.println("Obstacle rencontré à la position");
+            obstacles.setObstacle(true);
+            Map<Integer,Integer> obstacle = obstacles.getCoordonnee();
+            obstacle.put(y,x);
+            obstacles.setCoordonnee(obstacle);
+            return obstacles;
+        }else{
+            obstacles.setObstacle(false);
+            return obstacles;
+        }
     }
 }
