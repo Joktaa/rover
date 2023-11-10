@@ -1,8 +1,10 @@
 package org.ynov;
 
 import org.ynov.CommunicationAbstraction.ICommunicationClient;
+import org.ynov.CommunicationAbstraction.ICommunicationServer;
 import org.ynov.MissionControl.Carte;
 import org.ynov.Socket.SocketClient;
+import org.ynov.Socket.SocketServer;
 import org.ynov.Topologie.Planet;
 import org.ynov.Rover.IRover;
 import org.ynov.Rover.Rover;
@@ -17,8 +19,6 @@ public class MainASupprimer {
         final Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         boolean wantMap;
-//        ICommunicationClient com = new SocketClient();
-//        com.send("hello there");
 
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
         final String carte = scanner.next();
