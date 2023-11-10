@@ -2,17 +2,30 @@ package org.ynov.MissionControl;
 
 import org.ynov.Commandes.Direction;
 import org.ynov.Commandes.Rotation;
+import org.ynov.CommunicationAbstraction.ICommunicationClient;
+import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Rover.IRover;
+import org.ynov.Socket.SocketClient;
 
 import java.util.ArrayList;
 // Entité
-public class Console {
+public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
     private final IRover myRover;
+    //client
+    ICommunicationClient mcClient = new SocketClient();
 
     public Console(final IRover _myRover) {
         this.myRover = _myRover;
-}
+        //test client socket
+        mcClient.setDataCallback(this);
+        mcClient.listening();
+    }
+
+    @Override
+    public void onDataReceived(String data) {
+        System.out.println("Données reçues dans la console : " + data);
+    }
 
     private boolean run() {
         for(final Character direction : commands) {

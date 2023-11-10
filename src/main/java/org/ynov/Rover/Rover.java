@@ -2,22 +2,31 @@ package org.ynov.Rover;
 
 import org.ynov.Commandes.*;
 import org.ynov.CommunicationAbstraction.ICommunicationServer;
+import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Socket.SocketServer;
 import org.ynov.Topologie.Planet;
 
 import java.util.Random;
 //Objet valeur
-public class Rover implements IRover {
+public class Rover implements IRover, IDataCallback{
     public Orientation orientation;
     public final Position position;
     public final Planet planet;
+    //Server
+    ICommunicationServer roverServer = new SocketServer();
 
     public Rover(final Planet planet) {
         this.orientation = Orientation.NORTH;
         this.position = new Position();
         this.planet = planet;
+        //test socket serveur
+        roverServer.setDataCallback(this);
+        roverServer.listening();
     }
-
+    @Override
+    public void onDataReceived(String data) {
+        System.out.println("Données reçues dans la rover : " + data);
+    }
     public int getLatitude() {
         return this.position.getY();
     }
