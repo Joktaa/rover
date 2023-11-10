@@ -23,6 +23,7 @@ public class Console implements IDataCallback {
 
     public Console(final IRover _myRover) {
         this.myRover = _myRover;
+        obstacles = new Obstacles(false, new HashMap<>());
         //test client socket
         client.setDataCallback(this);
         client.listening();
