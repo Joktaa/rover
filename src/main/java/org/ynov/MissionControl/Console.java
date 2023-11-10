@@ -34,7 +34,7 @@ public class Console implements IDataCallback {
         System.out.println("Données reçues dans la console : " + data);
     }
 
-    private boolean run(boolean wantMap) {
+    private boolean run(boolean wantMap, boolean wantDebug) {
         for (final Character direction : commands) {
             switch (direction) {
                 case 'f' -> {
@@ -58,7 +58,7 @@ public class Console implements IDataCallback {
         }
 
         if (wantMap) {
-            this.printMap(myRover, obstacles);
+            this.printMap(myRover, obstacles, wantDebug);
         }
         return true;
     }
@@ -73,15 +73,15 @@ public class Console implements IDataCallback {
         this.commands = result;
     }
 
-    public boolean runCommand(final String command, boolean wantMap) {
+    public boolean runCommand(final String command, boolean wantMap, boolean wantDebug) {
         if (command.equals("stop")) {
             return false;
         }
         this.setCommand(command);
-        return this.run(wantMap);
+        return this.run(wantMap, wantDebug);
     }
 
-    private void printMap(IRover myRover, Obstacles obstacles) {
-        Carte carte = new Carte(myRover, obstacles);
+    private void printMap(IRover myRover, Obstacles obstacles, boolean wantDebug) {
+        Carte carte = new Carte(myRover, obstacles, wantDebug);
     }
 }

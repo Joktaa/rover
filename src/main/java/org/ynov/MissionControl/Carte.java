@@ -7,11 +7,11 @@ import java.util.Map;
 
 public class Carte {
 
-    public Carte(IRover rover, Obstacles obstacles) {
-        this.UI(rover,obstacles);
+    public Carte(IRover rover, Obstacles obstacles, boolean wantDebug) {
+        this.UI(rover,obstacles,wantDebug);
     }
 
-    public void UI(IRover rover, Obstacles obstacles){
+    public void UI(IRover rover, Obstacles obstacles, boolean wantDebug){
 
         //Init
         String right = ">";
@@ -66,15 +66,17 @@ public class Carte {
             System.out.println(border);
         }
 
-        System.out.println();
-        System.out.println();
+        if(wantDebug){
+            System.out.println();
+            System.out.println();
 
-        // Affichage Obstacle
-        for (int i = 0; i < planetX; i++) {
-            for (int j = 0; j < planetY; j++) {
-                System.out.print(border +  rover.getPlanet().getObstacle()[i][j]);
+            // Affichage Obstacle
+            for (int i = 0; i < planetX; i++) {
+                for (int j = 0; j < planetY; j++) {
+                    System.out.print(border +  rover.getPlanet().getObstacle()[i][j]);
+                }
+                System.out.println(border);
             }
-            System.out.println(border);
         }
     }
 }

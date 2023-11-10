@@ -15,26 +15,28 @@ public class MainASupprimer {
         final Console console = new Console(myRover);
         final Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
-        boolean wantMap;
-        boolean wantDebug;
+        boolean wantMap = false;
+        boolean wantDebug = false;
 
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
         final String carte = scanner.next().toLowerCase();
-        wantMap = carte.equals("oui");
+        if(carte.equals("oui")){
+            wantMap = true;
 
-        System.out.println("Debug? (oui/non)");
-        final String debug = scanner.next().toLowerCase();
-        wantDebug = debug.equals("oui");
-
+            System.out.println("Debug? (oui/non)");
+            final String debug = scanner.next().toLowerCase();
+            wantDebug = debug.equals("oui");
+        }
+        
         if (wantMap) {
-            new Carte(myRover, null);
+            new Carte(myRover, null, wantDebug);
         }
 
         while (isRunning) {
             System.out.println("Ecrire stop, une direction ou une suite de direction: (F, B, R, L)");
             final String commands = scanner.next().toLowerCase();
 
-            isRunning = console.runCommand(commands, wantMap);
+            isRunning = console.runCommand(commands, wantMap, wantDebug);
         }
     }
 }
