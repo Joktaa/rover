@@ -9,6 +9,7 @@ import org.ynov.Rover.IRover;
 import org.ynov.Socket.Communication;
 
 import java.util.ArrayList;
+
 // Entité
 public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
@@ -28,21 +29,24 @@ public class Console implements IDataCallback {
         System.out.println("Données reçues dans la console : " + data);
     }
 
-    private boolean run() {
-        for(final Character direction : commands) {
-            if(!myRover.isObstacle()){
-                switch (direction){
-                    case 'F' -> myRover.move(Direction.FRONT);
-                    case 'B' -> myRover.move(Direction.BEHIND);
-                    case 'R' -> myRover.rotate(Rotation.RIGHT);
-                    case 'L' -> myRover.rotate(Rotation.LEFT);
-                    default ->System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
-                }
-            } else {
-                System.out.println("Obstacle rencontré à la position");
-                myRover.getStatus();
-                return false;
+    private boolean run(boolean wantMap) {
+        for (final Character direction : commands) {
+//            if(!myRover.isObstacle()){
+            switch (direction) {
+                case 'F' -> myRover.move(Direction.FRONT);
+                case 'B' -> myRover.move(Direction.BEHIND);
+                case 'R' -> myRover.rotate(Rotation.RIGHT);
+                case 'L' -> myRover.rotate(Rotation.LEFT);
+                default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
             }
+//            } else {
+//                System.out.println("Obstacle rencontré à la position");
+//                myRover.getStatus();
+//                return false;
+//            }
+        }
+        if (wantMap) {
+            this.printMap(myRover);
         }
         return true;
     }
@@ -57,11 +61,15 @@ public class Console implements IDataCallback {
         this.commands = result;
     }
 
-    public boolean runCommand(final String command) {
-        if(command.equals("stop")){
+    public boolean runCommand(final String command, boolean wantMap) {
+        if (command.equals("stop")) {
             return false;
         }
         this.setCommand(command);
-        return this.run();
+        return this.run(wantMap);
+    }
+
+    private void printMap(IRover myRover) {
+        Carte carte = new Carte(myRover);
     }
 }

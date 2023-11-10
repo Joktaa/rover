@@ -13,7 +13,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction move(avancer)")
     void moveFrontRover() {
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         assertEquals(0, rover.getLatitude());
@@ -24,7 +24,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction move(reculer)")
     void moveBehindRover() {
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         assertEquals(0, rover.getLatitude());
@@ -37,7 +37,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction rotate")
     void rotateRover(){
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         rover.rotate(Rotation.RIGHT);
@@ -56,7 +56,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction checkOutOfBound, doit aller à l'opposé de la planette si le robot sort des limites")
     void checkOutOfBoundAndMoveFrontRover(){
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         for (int i = 0; i < 100; i++) {
@@ -74,7 +74,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction checkOutOfBound, doit aller à l'opposé de la planette si le robot sort des limites")
     void checkOutOfBoundAndMoveBehindRover(){
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         for (int i = 0; i < 100; i++) {
@@ -92,7 +92,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction checkOutOfBound, doit aller à l'opposé de la planette si le robot sort des limites")
     void checkOutOfBoundAndMoveRightFrontRover(){
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         rover.rotate(Rotation.RIGHT);
@@ -112,7 +112,7 @@ public class RoverTests {
     @Test
     @DisplayName("Test la fonction checkOutOfBound, doit aller à l'opposé de la planette si le robot sort des limites")
     void checkOutOfBoundAndMoveRightBehindRover(){
-        Planet planet = new Planet();
+        Planet planet = new Planet(100,100);
         Rover rover = new Rover(planet);
 
         rover.rotate(Rotation.RIGHT);
