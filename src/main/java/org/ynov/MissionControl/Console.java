@@ -3,6 +3,7 @@ package org.ynov.MissionControl;
 import org.ynov.Commandes.Direction;
 import org.ynov.Commandes.Rotation;
 import org.ynov.Rover.IRover;
+import org.ynov.Topologie.Planet;
 
 import java.util.ArrayList;
 // Entité
@@ -14,9 +15,9 @@ public class Console {
         this.myRover = _myRover;
 }
 
-    private boolean run() {
+    private boolean run(boolean wantMap) {
         for(final Character direction : commands) {
-            if(!myRover.isObstacle()){
+//            if(!myRover.isObstacle()){
                 switch (direction){
                     case 'F' -> myRover.move(Direction.FRONT);
                     case 'B' -> myRover.move(Direction.BEHIND);
@@ -24,11 +25,14 @@ public class Console {
                     case 'L' -> myRover.rotate(Rotation.LEFT);
                     default ->System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
                 }
-            } else {
-                System.out.println("Obstacle rencontré à la position");
-                myRover.getStatus();
-                return false;
-            }
+//            } else {
+//                System.out.println("Obstacle rencontré à la position");
+//                myRover.getStatus();
+//                return false;
+//            }
+        }
+        if(wantMap){
+            this.printMap(myRover);
         }
         return true;
     }
@@ -43,11 +47,15 @@ public class Console {
         this.commands = result;
     }
 
-    public boolean runCommand(final String command) {
+    public boolean runCommand(final String command, boolean wantMap) {
         if(command.equals("stop")){
             return false;
         }
         this.setCommand(command);
-        return this.run();
+        return this.run(wantMap);
+    }
+
+    private void printMap(IRover myRover){
+        Carte carte = new Carte(myRover);
     }
 }

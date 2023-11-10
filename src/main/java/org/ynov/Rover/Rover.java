@@ -26,6 +26,17 @@ public class Rover implements IRover {
         return this.position.getX();
     }
 
+    public Planet getPlanet() {
+        return planet;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
 
     public void rotate(final Rotation rotation) {
         if (rotation.equals(Rotation.RIGHT)) {
