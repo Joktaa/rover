@@ -1,9 +1,10 @@
 package org.ynov.Rover;
 
 import org.ynov.Commandes.*;
-import org.ynov.CommunicationAbstraction.ICommunicationServer;
+import org.ynov.CommunicationAbstraction.ICommunication;
 import org.ynov.CommunicationAbstraction.IDataCallback;
-import org.ynov.Socket.SocketServer;
+import org.ynov.Configuration.Configuration;
+import org.ynov.Socket.Communication;
 import org.ynov.Topologie.Planet;
 
 import java.util.Map;
@@ -14,15 +15,15 @@ public class Rover implements IRover, IDataCallback {
     public final Position position;
     public final Planet planet;
     //Server
-    ICommunicationServer roverServer = new SocketServer();
+    private ICommunication server = new Communication(Configuration.SERVER_PORT, Configuration.IP_SERVER_MUST_SEND_TO, Configuration.PORT_SERVER_MUST_SEND_TO);
 
     public Rover(final Planet planet) {
         this.orientation = Orientation.NORTH;
         this.position = new Position();
         this.planet = planet;
         //test socket serveur
-        roverServer.setDataCallback(this);
-        roverServer.listening();
+        server.setDataCallback(this);
+        server.listening();
     }
 
     @Override
