@@ -113,7 +113,7 @@ public class Rover implements IRover, IDataCallback {
 
 
         switch (nextMouv) {
-            case 'F' -> {
+            case 'f' -> {
                 switch (this.orientation) {
                     case NORTH -> y = y-1;
                     case WEST -> x = x-1 ;
@@ -121,7 +121,7 @@ public class Rover implements IRover, IDataCallback {
                     case EST -> x = x+1;
                 }
             }
-            case 'B' -> {
+            case 'b' -> {
                 switch (this.orientation) {
                     case NORTH -> y = y+1 ;
                     case WEST -> x= x+1 ;
@@ -131,9 +131,32 @@ public class Rover implements IRover, IDataCallback {
             }
         }
 
+        if (y >= 0 && x >= 0 && y <= this.planet.getY_size()*2 && x <= this.planet.getX_size()*2) {
+            check(obstacles,y,x);
+        }
+        //Potientielle bug ?
+        else if (y<0){
+            y = this.planet.getY_size()*2;
+            check(obstacles,y,x);
+        }
+        else if(x<0){
+            x = this.planet.getX_size()*2;
+            check(obstacles,y,x);
+        }
+        else if(y>this.planet.getY_size()){
+            y=0;
+            check(obstacles,y,x);
+        }
+        else if(x>this.planet.getX_size()){
+            x=0;
+            check(obstacles,y,x);
+        }
+
+        return obstacles;
+    }
+
+    public Obstacles check(Obstacles obstacles, int y, int x){
         String [][] obst = this.planet.getObstacle();
-
-
 
         if(obst[y][x].equals("x")){
             System.out.println("Obstacle rencontré à la position");
@@ -142,16 +165,13 @@ public class Rover implements IRover, IDataCallback {
             if(obstacle.get(y) == null){
                 List<Integer> list = new ArrayList<>();
                 obstacle.put(y,list);
-
             }
             obstacle.get(y).add(x);
 
-
             obstacles.setCoordonnee(obstacle);
-            return obstacles;
         }else{
             obstacles.setObstacle(false);
-            return obstacles;
         }
+        return obstacles;
     }
 }

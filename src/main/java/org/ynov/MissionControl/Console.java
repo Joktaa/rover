@@ -37,21 +37,21 @@ public class Console implements IDataCallback {
     private boolean run(boolean wantMap) {
         for (final Character direction : commands) {
             switch (direction) {
-                case 'F' -> {
-                    obstacles = myRover.isObstacle('F',obstacles);
+                case 'f' -> {
+                    obstacles = myRover.isObstacle('f',obstacles);
                     if(!obstacles.isObstacle()){
                         myRover.move(Direction.FRONT);
                     }
                 }
-                case 'B' -> {
-                    obstacles = myRover.isObstacle('B',obstacles);
+                case 'b' -> {
+                    obstacles = myRover.isObstacle('b',obstacles);
                     if(!obstacles.isObstacle()){
                         myRover.move(Direction.BEHIND);
                     }
                 }
-                case 'R' -> myRover.rotate(Rotation.RIGHT);
+                case 'r' -> myRover.rotate(Rotation.RIGHT);
 
-                case 'L' -> myRover.rotate(Rotation.LEFT);
+                case 'l' -> myRover.rotate(Rotation.LEFT);
 
                 default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
             }

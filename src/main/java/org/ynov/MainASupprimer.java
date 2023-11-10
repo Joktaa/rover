@@ -19,11 +19,11 @@ public class MainASupprimer {
         boolean wantDebug;
 
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
-        final String carte = scanner.next();
+        final String carte = scanner.next().toLowerCase();
         wantMap = carte.equals("oui");
 
         System.out.println("Debug? (oui/non)");
-        final String debug = scanner.next();
+        final String debug = scanner.next().toLowerCase();
         wantDebug = debug.equals("oui");
 
         if (wantMap) {
@@ -32,7 +32,7 @@ public class MainASupprimer {
 
         while (isRunning) {
             System.out.println("Ecrire stop, une direction ou une suite de direction: (F, B, R, L)");
-            final String commands = scanner.next();
+            final String commands = scanner.next().toLowerCase();
 
             isRunning = console.runCommand(commands, wantMap);
         }
