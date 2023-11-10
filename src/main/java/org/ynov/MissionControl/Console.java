@@ -6,6 +6,7 @@ import org.ynov.CommunicationAbstraction.ICommunication;
 import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Configuration.Configuration;
 import org.ynov.Rover.IRover;
+import org.ynov.Rover.Obstacles;
 import org.ynov.Socket.Communication;
 
 import java.util.ArrayList;
