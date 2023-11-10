@@ -14,7 +14,7 @@ public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
     private final IRover myRover;
     //client
-    ICommunication client = new Communication(Configuration.CLIENT_PORT, Configuration.IP_CLIENT_MUST_SEND_TO, Configuration.PORT_CLIENT_MUST_SEND_TO);
+    private final ICommunication client = new Communication(Configuration.CLIENT_PORT, Configuration.IP_CLIENT_MUST_SEND_TO, Configuration.PORT_CLIENT_MUST_SEND_TO);
 
     public Console(final IRover _myRover) {
         this.myRover = _myRover;
