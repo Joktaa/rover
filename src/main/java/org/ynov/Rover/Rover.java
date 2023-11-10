@@ -143,11 +143,11 @@ public class Rover implements IRover, IDataCallback {
             x = this.planet.getX_size()*2;
             check(obstacles,y,x);
         }
-        else if(y>this.planet.getY_size()){
+        else if(y>this.planet.getY_size()*2){
             y=0;
             check(obstacles,y,x);
         }
-        else if(x>this.planet.getX_size()){
+        else if(x>this.planet.getX_size()*2){
             x=0;
             check(obstacles,y,x);
         }
