@@ -5,10 +5,10 @@ import org.ynov.Commandes.Rotation;
 import org.ynov.CommunicationAbstraction.ICommunicationClient;
 import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Rover.IRover;
-import org.ynov.Topologie.Planet;
 import org.ynov.Socket.SocketClient;
 
 import java.util.ArrayList;
+
 // Entité
 public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
@@ -29,22 +29,22 @@ public class Console implements IDataCallback {
     }
 
     private boolean run(boolean wantMap) {
-        for(final Character direction : commands) {
+        for (final Character direction : commands) {
 //            if(!myRover.isObstacle()){
-                switch (direction){
-                    case 'F' -> myRover.move(Direction.FRONT);
-                    case 'B' -> myRover.move(Direction.BEHIND);
-                    case 'R' -> myRover.rotate(Rotation.RIGHT);
-                    case 'L' -> myRover.rotate(Rotation.LEFT);
-                    default ->System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
-                }
+            switch (direction) {
+                case 'F' -> myRover.move(Direction.FRONT);
+                case 'B' -> myRover.move(Direction.BEHIND);
+                case 'R' -> myRover.rotate(Rotation.RIGHT);
+                case 'L' -> myRover.rotate(Rotation.LEFT);
+                default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
+            }
 //            } else {
 //                System.out.println("Obstacle rencontré à la position");
 //                myRover.getStatus();
 //                return false;
 //            }
         }
-        if(wantMap){
+        if (wantMap) {
             this.printMap(myRover);
         }
         return true;
@@ -61,14 +61,14 @@ public class Console implements IDataCallback {
     }
 
     public boolean runCommand(final String command, boolean wantMap) {
-        if(command.equals("stop")){
+        if (command.equals("stop")) {
             return false;
         }
         this.setCommand(command);
         return this.run(wantMap);
     }
 
-    private void printMap(IRover myRover){
+    private void printMap(IRover myRover) {
         Carte carte = new Carte(myRover);
     }
 }
