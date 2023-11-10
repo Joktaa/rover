@@ -1,9 +1,5 @@
 package org.ynov;
 
-import org.ynov.CommunicationAbstraction.ICommunicationClient;
-import org.ynov.CommunicationAbstraction.ICommunicationServer;
-import org.ynov.Socket.SocketClient;
-import org.ynov.Socket.SocketServer;
 import org.ynov.Topologie.Planet;
 import org.ynov.Rover.IRover;
 import org.ynov.Rover.Rover;
