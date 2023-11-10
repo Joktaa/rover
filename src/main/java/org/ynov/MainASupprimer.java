@@ -1,6 +1,7 @@
 package org.ynov;
 
 import org.ynov.CommunicationAbstraction.ICommunicationClient;
+import org.ynov.MissionControl.Carte;
 import org.ynov.Socket.SocketClient;
 import org.ynov.Topologie.Planet;
 import org.ynov.Rover.IRover;
@@ -22,6 +23,10 @@ public class MainASupprimer {
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
         final String carte = scanner.next();
         wantMap = carte.equals("oui");
+        if(wantMap){
+            new Carte(myRover);
+        }
+
 
         while(isRunning){
             System.out.println("Ecrire stop, une direction ou une suite de direction: (F, B, R, L)");
