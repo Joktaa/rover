@@ -16,10 +16,15 @@ public class MainASupprimer {
         final Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         boolean wantMap;
+        boolean wantDebug;
 
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
         final String carte = scanner.next();
         wantMap = carte.equals("oui");
+
+        System.out.println("Debug? (oui/non)");
+        final String debug = scanner.next();
+        wantDebug = debug.equals("oui");
 
         if (wantMap) {
             new Carte(myRover, null);

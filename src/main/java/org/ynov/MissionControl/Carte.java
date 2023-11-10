@@ -2,6 +2,7 @@ package org.ynov.MissionControl;
 import org.ynov.Rover.IRover;
 import org.ynov.Rover.Obstacles;
 
+import java.util.List;
 import java.util.Map;
 
 public class Carte {
@@ -49,8 +50,10 @@ public class Carte {
 
         if(obstacles !=null){
             // Ajout des obstacles
-            for (Map.Entry<Integer, Integer> obstacle : obstacles.getCoordonnee().entrySet()) {
-                map[obstacle.getKey()][obstacle.getValue()] = rock;
+            for (Map.Entry<Integer, List<Integer>> obstacle : obstacles.getCoordonnee().entrySet()) {
+                for (Integer x: obstacle.getValue()) {
+                    map[obstacle.getKey()][x] = rock;
+                }
             }
         }
 

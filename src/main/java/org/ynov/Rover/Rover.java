@@ -7,6 +7,8 @@ import org.ynov.Configuration.Configuration;
 import org.ynov.Socket.Communication;
 import org.ynov.Topologie.Planet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 //Objet valeur
@@ -130,11 +132,21 @@ public class Rover implements IRover, IDataCallback {
         }
 
         String [][] obst = this.planet.getObstacle();
+
+
+
         if(obst[y][x].equals("x")){
             System.out.println("Obstacle rencontré à la position");
             obstacles.setObstacle(true);
-            Map<Integer,Integer> obstacle = obstacles.getCoordonnee();
-            obstacle.put(y,x);
+            Map<Integer, List<Integer>> obstacle = obstacles.getCoordonnee();
+            if(obstacle.get(y) == null){
+                List<Integer> list = new ArrayList<>();
+                obstacle.put(y,list);
+
+            }
+            obstacle.get(y).add(x);
+
+
             obstacles.setCoordonnee(obstacle);
             return obstacles;
         }else{
