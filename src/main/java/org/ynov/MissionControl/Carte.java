@@ -1,22 +1,17 @@
 package org.ynov.MissionControl;
-import org.ynov.Commandes.Orientation;
-import org.ynov.Commandes.Position;
 import org.ynov.Rover.IRover;
-import org.ynov.Topologie.Planet;
+import org.ynov.Rover.Obstacles;
 
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
+import java.util.List;
+import java.util.Map;
 
 public class Carte {
 
-    public Carte(IRover rover) {
-        this.UI(rover);
+    public Carte(IRover rover, Obstacles obstacles, boolean wantDebug) {
+        this.UI(rover,obstacles,wantDebug);
     }
 
-    public void UI(IRover rover){
+    public void UI(IRover rover, Obstacles obstacles, boolean wantDebug){
 
         //Init
         String right = ">";
@@ -53,12 +48,35 @@ public class Carte {
             }
         }
 
+        if(obstacles !=null){
+            // Ajout des obstacles
+            for (Map.Entry<Integer, List<Integer>> obstacle : obstacles.getCoordonnee().entrySet()) {
+                for (Integer x: obstacle.getValue()) {
+                    map[obstacle.getKey()][x] = rock;
+                }
+            }
+        }
+
+
         // Affichage
         for (int i = 0; i < planetX; i++) {
             for (int j = 0; j < planetY; j++) {
                 System.out.print(border +  map[i][j]);
             }
             System.out.println(border);
+        }
+
+        if(wantDebug){
+            System.out.println();
+            System.out.println();
+
+            // Affichage Obstacle
+            for (int i = 0; i < planetX; i++) {
+                for (int j = 0; j < planetY; j++) {
+                    System.out.print(border +  rover.getPlanet().getObstacle()[i][j]);
+                }
+                System.out.println(border);
+            }
         }
     }
 }

@@ -7,9 +7,12 @@ import org.ynov.Configuration.Configuration;
 import org.ynov.Socket.Communication;
 import org.ynov.Topologie.Planet;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 //Objet valeur
-public class Rover implements IRover, IDataCallback{
+public class Rover implements IRover, IDataCallback {
     public Orientation orientation;
     public final Position position;
     public final Planet planet;
@@ -24,10 +27,12 @@ public class Rover implements IRover, IDataCallback{
         server.setDataCallback(this);
         server.listening();
     }
+
     @Override
     public void onDataReceived(String data) {
         System.out.println("Données reçues dans la rover : " + data);
     }
+
     public int getLatitude() {
         return this.position.getY();
     }
@@ -92,12 +97,81 @@ public class Rover implements IRover, IDataCallback{
 
     public void getStatus() {
         System.out.println(this.position.toString());
-        System.out.println("Je suis orienté à "+this.orientation);
+        System.out.println("Je suis orienté à " + this.orientation);
 
     }
 
-    public boolean isObstacle() {
-        final Random rd = new Random();
-        return rd.nextInt(5) == 4;
+    public Obstacles isObstacle(char nextMouv, Obstacles obstacles) {
+
+        int x = this.position.getX() + this.planet.getX_size();
+        int y = 0;
+        if(this.position.getY()>0){
+            y = this.planet.getY_size() - this.position.getY();
+        }else{
+            y = (this.position.getY() * -1) + this.planet.getY_size();
+        }
+
+
+        switch (nextMouv) {
+            case 'f' -> {
+                switch (this.orientation) {
+                    case NORTH -> y = y-1;
+                    case WEST -> x = x-1 ;
+                    case SOUTH -> y = y+1;
+                    case EST -> x = x+1;
+                }
+            }
+            case 'b' -> {
+                switch (this.orientation) {
+                    case NORTH -> y = y+1 ;
+                    case WEST -> x= x+1 ;
+                    case SOUTH -> y = y-1;
+                    case EST -> x = x-1;
+                }
+            }
+        }
+
+        if (y >= 0 && x >= 0 && y <= this.planet.getY_size()*2 && x <= this.planet.getX_size()*2) {
+            check(obstacles,y,x);
+        }
+        //Potientielle bug ?
+        else if (y<0){
+            y = this.planet.getY_size()*2;
+            check(obstacles,y,x);
+        }
+        else if(x<0){
+            x = this.planet.getX_size()*2;
+            check(obstacles,y,x);
+        }
+        else if(y>this.planet.getY_size()*2){
+            y=0;
+            check(obstacles,y,x);
+        }
+        else if(x>this.planet.getX_size()*2){
+            x=0;
+            check(obstacles,y,x);
+        }
+
+        return obstacles;
+    }
+
+    public Obstacles check(Obstacles obstacles, int y, int x){
+        String [][] obst = this.planet.getObstacle();
+
+        if(obst[y][x].equals("x")){
+            System.out.println("Obstacle rencontré à la position");
+            obstacles.setObstacle(true);
+            Map<Integer, List<Integer>> obstacle = obstacles.getCoordonnee();
+            if(obstacle.get(y) == null){
+                List<Integer> list = new ArrayList<>();
+                obstacle.put(y,list);
+            }
+            obstacle.get(y).add(x);
+
+            obstacles.setCoordonnee(obstacle);
+        }else{
+            obstacles.setObstacle(false);
+        }
+        return obstacles;
     }
 }

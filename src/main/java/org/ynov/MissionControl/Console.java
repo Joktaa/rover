@@ -6,19 +6,24 @@ import org.ynov.CommunicationAbstraction.ICommunication;
 import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Configuration.Configuration;
 import org.ynov.Rover.IRover;
+import org.ynov.Rover.Obstacles;
 import org.ynov.Socket.Communication;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 // Entité
 public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
     private final IRover myRover;
+
+    private Obstacles obstacles;
     //client
     private final ICommunication client = new Communication(Configuration.CLIENT_PORT, Configuration.IP_CLIENT_MUST_SEND_TO, Configuration.PORT_CLIENT_MUST_SEND_TO);
 
     public Console(final IRover _myRover) {
         this.myRover = _myRover;
+        obstacles = new Obstacles(false, new HashMap<>());
         //test client socket
         client.setDataCallback(this);
         client.listening();
@@ -29,24 +34,31 @@ public class Console implements IDataCallback {
         System.out.println("Données reçues dans la console : " + data);
     }
 
-    private boolean run(boolean wantMap) {
+    private boolean run(boolean wantMap, boolean wantDebug) {
         for (final Character direction : commands) {
-//            if(!myRover.isObstacle()){
             switch (direction) {
-                case 'F' -> myRover.move(Direction.FRONT);
-                case 'B' -> myRover.move(Direction.BEHIND);
-                case 'R' -> myRover.rotate(Rotation.RIGHT);
-                case 'L' -> myRover.rotate(Rotation.LEFT);
+                case 'f' -> {
+                    obstacles = myRover.isObstacle('f',obstacles);
+                    if(!obstacles.isObstacle()){
+                        myRover.move(Direction.FRONT);
+                    }
+                }
+                case 'b' -> {
+                    obstacles = myRover.isObstacle('b',obstacles);
+                    if(!obstacles.isObstacle()){
+                        myRover.move(Direction.BEHIND);
+                    }
+                }
+                case 'r' -> myRover.rotate(Rotation.RIGHT);
+
+                case 'l' -> myRover.rotate(Rotation.LEFT);
+
                 default -> System.out.println("Commande incorrecte, le rover n'a pas bougé de position");
             }
-//            } else {
-//                System.out.println("Obstacle rencontré à la position");
-//                myRover.getStatus();
-//                return false;
-//            }
         }
+
         if (wantMap) {
-            this.printMap(myRover);
+            this.printMap(myRover, obstacles, wantDebug);
         }
         return true;
     }
@@ -61,15 +73,15 @@ public class Console implements IDataCallback {
         this.commands = result;
     }
 
-    public boolean runCommand(final String command, boolean wantMap) {
+    public boolean runCommand(final String command, boolean wantMap, boolean wantDebug) {
         if (command.equals("stop")) {
             return false;
         }
         this.setCommand(command);
-        return this.run(wantMap);
+        return this.run(wantMap, wantDebug);
     }
 
-    private void printMap(IRover myRover) {
-        Carte carte = new Carte(myRover);
+    private void printMap(IRover myRover, Obstacles obstacles, boolean wantDebug) {
+        Carte carte = new Carte(myRover, obstacles, wantDebug);
     }
 }
