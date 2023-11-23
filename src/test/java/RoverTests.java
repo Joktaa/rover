@@ -129,31 +129,4 @@ public class RoverTests {
         assertEquals(99, rover.getLongitude());
     }
 
-
-//    @Test
-//    @DisplayName("Test les commandes pour le robot")
-//    void command(){
-//        Planet planet = new Planet();
-//        Position position = new Position();
-//
-//        roverMock = mock(Rover.class);
-//        when(roverMock.getPlanet()).thenReturn(planet);
-//        when(roverMock.position).thenReturn(position);
-//        when(roverMock.getLongitude()).thenReturn(0);
-//        when(roverMock.isObstacle()).thenReturn(false);
-//        Console console = new Console(roverMock);
-//
-//        console.runCommand("FFRBFFL");
-//
-//
-//        assertEquals(2, roverMock.getLongitude());
-//        assertEquals(1, roverMock.getLatitude());
-//
-////        Planet planet = new Planet();
-////        Rover rover = new Rover(planet);
-////        Console console = new Console(rover);
-//
-//
-//
-//    }
 }
