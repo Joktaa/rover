@@ -17,6 +17,7 @@ public class Main{
         boolean wantMap = false;
         boolean wantDebug = false;
 
+        System.out.println("Connexion Rover ?");
         // Pour avoir le temps de lancé le run du main du Rover
         TimeUnit.SECONDS.sleep(10);
 

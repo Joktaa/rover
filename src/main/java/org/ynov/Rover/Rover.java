@@ -17,15 +17,15 @@ public class Rover implements IRover, IDataCallback {
     public final Position position;
     public final Planet planet;
     //Server
-    private ICommunication server = new Communication(Configuration.SERVER_PORT, Configuration.IP_SERVER_MUST_SEND_TO, Configuration.PORT_SERVER_MUST_SEND_TO);
+//    private ICommunication server = new Communication(Configuration.SERVER_PORT, Configuration.IP_SERVER_MUST_SEND_TO, Configuration.PORT_SERVER_MUST_SEND_TO);
 
     public Rover(final Planet planet) {
         this.orientation = Orientation.NORTH;
         this.position = new Position();
         this.planet = planet;
         //test socket serveur
-        server.setDataCallback(this);
-        server.listening();
+//        server.setDataCallback(this);
+//        server.listening();
     }
 
     @Override
