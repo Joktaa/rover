@@ -1,45 +1,37 @@
 package org.ynov.MissionControl;
 
-import org.ynov.CommunicationAbstraction.ICommunication;
-import org.ynov.CommunicationAbstraction.IDataCallback;
 import org.ynov.Rover.IRover;
 import org.ynov.Rover.Rover;
-import org.ynov.Socket.Communication;
 import org.ynov.Topologie.Planet;
 
-import java.io.IOException;
 import java.util.Scanner;
-import java.net.*;
+import java.util.concurrent.TimeUnit;
 
-public class Main implements IDataCallback {
-    private String data;
-    public void main(String[] args) {
+public class Main{
+    public static void main(String[] args) throws InterruptedException {
         final Planet planet ;
         final IRover myRover;
-        final Console console;
+        final Console console = new Console();
         final Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
-        boolean wantMap;
-        boolean wantDebug;
-        ICommunication communication = new Communication(2222,"localhost",1111);
-        communication.listening();
-        communication.setDataCallback(this);
+        boolean wantMap = false;
+        boolean wantDebug = false;
+
+        // Pour avoir le temps de lancé le run du main du Rover
+        TimeUnit.SECONDS.sleep(10);
 
         //si rover non déployer
-        if(data.equals("blabla")){
+        if(console.getData().isEmpty()){
             planet = new Planet(5, 5);
-            myRover = new Rover(planet);
-            console = new Console(myRover);
-            wantMap = false;
-            wantDebug = false;
-        }else{
-            planet = new Planet(5, 5);
-            myRover = new Rover(planet);
-            console = new Console(myRover);
-            wantMap = false;
-            wantDebug = false;
+        }
+        //sinon nous récuperons les données envoyées par le rover
+        else{
+            String[] data = console.getData().split("-");
+            planet = new Planet(Integer.parseInt(data[0]) , Integer.parseInt(data[1]));
         }
 
+        myRover = new Rover(planet);
+        console.setMyRover(myRover);
 
         System.out.println("Imprimer une carte de la planet ? (oui/non)");
         final String carte = scanner.next().toLowerCase();
@@ -63,9 +55,5 @@ public class Main implements IDataCallback {
         }
 
 
-    }
-    @Override
-    public void onDataReceived(String data) {
-        this.data = data;
     }
 }

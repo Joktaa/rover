@@ -15,23 +15,32 @@ import java.util.HashMap;
 // Entité
 public class Console implements IDataCallback {
     private ArrayList<Character> commands = new ArrayList<>();
-    private final IRover myRover;
+    private IRover myRover;
+
+    private String data = "";
 
     private Obstacles obstacles;
     //client
     private final ICommunication client = new Communication(Configuration.CLIENT_PORT, Configuration.IP_CLIENT_MUST_SEND_TO, Configuration.PORT_CLIENT_MUST_SEND_TO);
 
-    public Console(final IRover _myRover) {
-        this.myRover = _myRover;
+    public Console() {
         obstacles = new Obstacles(false, new HashMap<>());
         //test client socket
         client.setDataCallback(this);
         client.listening();
     }
 
+    public void setMyRover(IRover myRover) {
+        this.myRover = myRover;
+    }
+
+    public String getData() {
+        return data;
+    }
+
     @Override
     public void onDataReceived(String data) {
-        System.out.println("Données reçues dans la console : " + data);
+       this.data = data;
     }
 
     private boolean run(boolean wantMap, boolean wantDebug) {
